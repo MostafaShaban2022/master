@@ -59,13 +59,15 @@ class Cart extends StatelessWidget {
                     itemBuilder: (context, index) {
                       ProductModel productModel = provider.items[index];
                       return ListTile(
-                        leading: Container(
+                        leading: SizedBox(
                           height: 22,
                           width: 22,
-                          decoration: BoxDecoration(
-                            color: productModel.color,
-                            borderRadius:
-                                BorderRadius.circular(8), // rounded corners
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: productModel.color,
+                              borderRadius:
+                                  BorderRadius.circular(8), // rounded corners
+                            ),
                           ),
                         ),
                         title: Text(

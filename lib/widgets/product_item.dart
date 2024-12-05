@@ -3,7 +3,6 @@ import 'package:flutter_application_14/models/product_model.dart';
 import 'package:flutter_application_14/providers/cart_provider.dart';
 import 'package:flutter_application_14/providers/favourite_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductModel productModel;

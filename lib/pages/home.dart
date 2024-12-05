@@ -238,15 +238,23 @@ class _HomeState extends State<Home> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            header(),
-            content(),
-          ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(
+          const Duration(seconds: 3),
+        );
+        setState(() {});
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              header(),
+              content(),
+            ],
+          ),
         ),
       ),
     );
