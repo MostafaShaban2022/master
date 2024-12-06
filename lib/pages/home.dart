@@ -7,6 +7,7 @@ import 'package:flutter_application_14/pages/notifications.dart';
 import 'package:flutter_application_14/providers/cart_provider.dart';
 import 'package:flutter_application_14/providers/favourite_provider.dart';
 import 'package:flutter_application_14/providers/ui_provider.dart';
+import 'package:flutter_application_14/services/search_services.dart';
 import 'package:flutter_application_14/widgets/product_item.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int value = 0;
+  final List<ProductModel> products = [
+    ProductModel(id: 1, name: 'Laptop', color: Colors.red, price: 80),
+    ProductModel(id: 2, name: 'Mobile', color: Colors.green, price: 60),
+    ProductModel(id: 3, name: 'Computer', color: Colors.yellow, price: 70),
+    ProductModel(
+        id: 4, name: 'Coffee Machine', color: Colors.orange, price: 10),
+    ProductModel(id: 5, name: 'iMac 3', color: Colors.brown, price: 100),
+    ProductModel(id: 6, name: 'Kettle', color: Colors.pink, price: 90),
+    ProductModel(id: 7, name: 'MacBook', color: Colors.purple, price: 40),
+  ];
+
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -78,6 +90,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+
           const SizedBox(
             width: 10,
           ),
@@ -176,86 +189,45 @@ class _HomeState extends State<Home> {
       return Container(
         margin: const EdgeInsets.only(top: 25, right: 30, left: 30),
         child: Column(
-          children: [
-            ProductItem(
-              ProductModel(
-                id: 1,
-                name: 'Laptop',
-                color: Colors.red,
-                price: 80,
-              ),
-            ),
-            ProductItem(
-              ProductModel(
-                id: 2,
-                name: 'Mobile',
-                color: Colors.green,
-                price: 60,
-              ),
-            ),
-            ProductItem(
-              ProductModel(
-                id: 3,
-                name: 'Computer',
-                color: Colors.yellow,
-                price: 70,
-              ),
-            ),
-            ProductItem(
-              ProductModel(
-                id: 4,
-                name: 'Coffee Machine',
-                color: Colors.orange,
-                price: 10,
-              ),
-            ),
-            ProductItem(
-              ProductModel(
-                id: 5,
-                name: 'imac 3',
-                color: Colors.brown,
-                price: 100,
-              ),
-            ),
-            ProductItem(
-              ProductModel(
-                id: 6,
-                name: 'kettle',
-                color: Colors.pink,
-                price: 90,
-              ),
-            ),
-            ProductItem(
-              ProductModel(
-                id: 5,
-                name: 'macbook',
-                color: Colors.purple,
-                price: 40,
-              ),
-            ),
-          ],
+          children: products.map((product) => ProductItem(product)).toList(),
         ),
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        await Future.delayed(
-          const Duration(seconds: 3),
-        );
-        setState(() {});
-      },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              header(),
-              content(),
-            ],
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                header(),
+                content(),
+              ],
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 25),
+              child: IconButton(
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: SearchServices(
+                        products), // Pass products list to SearchServices
+                  );
+                },
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                  size: 25,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
