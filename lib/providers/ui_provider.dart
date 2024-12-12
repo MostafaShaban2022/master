@@ -12,7 +12,9 @@ class UiProvider extends ChangeNotifier {
     primaryColor: Colors.white,
     primaryColorDark: Colors.white,
     textTheme: const TextTheme(
-      bodyMedium: TextStyle(color: Colors.black),
+      bodyMedium: TextStyle(
+        color: Colors.black,
+      ),
       headlineMedium: TextStyle(
         color: Colors.black,
         fontSize: 15,

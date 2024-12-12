@@ -9,6 +9,7 @@ import 'package:flutter_application_14/providers/favourite_provider.dart';
 import 'package:flutter_application_14/providers/ui_provider.dart';
 import 'package:flutter_application_14/services/search_services.dart';
 import 'package:flutter_application_14/widgets/product_item.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -20,6 +21,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int value = 0;
+  late FlutterLocalization _flutterLocalization;
+  late String _currentLocale;
+
+  @override
+  void initState() {
+    _flutterLocalization = FlutterLocalization.instance;
+    _currentLocale = _flutterLocalization.currentLocale!.languageCode;
+    super.initState();
+  }
+
   final List<ProductModel> products = [
     ProductModel(id: 1, name: 'Laptop', color: Colors.red, price: 80),
     ProductModel(id: 2, name: 'Mobile', color: Colors.green, price: 60),
@@ -142,16 +153,16 @@ class _HomeState extends State<Home> {
 
           // cart
           Consumer<CartProvider>(
-            builder: (context, favouriteProvider, child) {
+            builder: (context, cartProvider, child) {
               return badges.Badge(
                 badgeContent: Text(
-                  '${favouriteProvider.itemCount}',
+                  '${cartProvider.itemCount}',
                   style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 position: badges.BadgePosition.topStart(start: 1, top: -2),
-                showBadge: favouriteProvider.itemCount > 0,
+                showBadge: cartProvider.itemCount > 0,
                 ignorePointer: false,
                 badgeAnimation: const badges.BadgeAnimation.slide(
                   toAnimate: true,
@@ -207,28 +218,57 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 25),
-              child: IconButton(
-                onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: SearchServices(
-                        products), // Pass products list to SearchServices
-                  );
-                },
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                  size: 25,
-                ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      showSearch(
+                        context: context,
+                        delegate: SearchServices(products),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                      size: 25,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  DropdownButton<String>(
+                    value: _currentLocale,
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'en',
+                        child: Text('English'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'ar',
+                        child: Text('Arabic'),
+                      ),
+                    ],
+                    onChanged: _selectLocale,
+                  ),
+                ],
               ),
             ),
           )
         ],
       ),
     );
+  }
+
+  void _selectLocale(String? value) {
+    if (value == null) return;
+
+    _flutterLocalization.translate(value);
+    setState(() {
+      _currentLocale = value;
+    });
   }
 }

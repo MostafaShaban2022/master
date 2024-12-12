@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/models/product_model.dart';
+import 'package:flutter_application_14/pages/product_detail.dart';
 import 'package:flutter_application_14/providers/cart_provider.dart';
 import 'package:flutter_application_14/providers/favourite_provider.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +20,24 @@ class ProductItem extends StatelessWidget {
 
     return Row(
       children: [
-        Container(
-          height: 22,
-          width: 22,
-          decoration: BoxDecoration(
-            color: productModel.color,
-            borderRadius: BorderRadius.circular(4),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetail(
+                  productModel: productModel,
+                ),
+              ),
+            );
+          },
+          child: Container(
+            height: 22,
+            width: 22,
+            decoration: BoxDecoration(
+              color: productModel.color,
+              borderRadius: BorderRadius.circular(4),
+            ),
           ),
         ),
         const SizedBox(width: 15),
@@ -80,7 +93,7 @@ class ProductItem extends StatelessWidget {
               cartProvider.remove(productModel);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.red,
                   content: Text('${productModel.name} removed from cart'),
                   duration: const Duration(seconds: 2),
                 ),

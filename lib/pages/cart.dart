@@ -87,7 +87,7 @@ class Cart extends StatelessWidget {
                                   ),
                         ),
                         subtitle: Text(
-                          '\$${productModel.price.toStringAsFixed(2)}', // Product price
+                          '\$${productModel.price.toStringAsFixed(2)}',
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 14,

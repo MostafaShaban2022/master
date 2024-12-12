@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/models/product_model.dart';
+import 'package:flutter_application_14/pages/product_detail.dart';
 
 class SearchServices extends SearchDelegate<String> {
   final List<ProductModel> products;
-
   SearchServices(this.products);
 
   @override
@@ -40,15 +40,29 @@ class SearchServices extends SearchDelegate<String> {
       itemBuilder: (context, index) {
         final product = results[index];
         return ListTile(
-          title: Text(product.name),
-          subtitle: Text('\$${product.price}'),
+          title: Text(
+            product.name,
+          ),
+          subtitle: Text(
+            '\$${product.price}',
+          ),
           leading: Container(
             height: 22,
             width: 22,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4), color: product.color),
+              borderRadius: BorderRadius.circular(4),
+              color: product.color,
+            ),
           ),
           onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetail(
+                  productModel: product,
+                ),
+              ),
+            );
             close(context, product.name);
           },
         );
@@ -76,6 +90,14 @@ class SearchServices extends SearchDelegate<String> {
                 borderRadius: BorderRadius.circular(4), color: product.color),
           ),
           onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetail(
+                  productModel: product,
+                ),
+              ),
+            );
             query = product.name;
             showResults(context);
           },

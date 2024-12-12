@@ -53,15 +53,13 @@ class Favourite extends StatelessWidget {
                   itemBuilder: (context, index) {
                     ProductModel productModel = provider.items[index];
                     return ListTile(
-                      leading: SizedBox(
+                      leading: Container(
                         height: 22,
                         width: 22,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: productModel.color,
-                            borderRadius:
-                                BorderRadius.circular(8), // rounded corners
-                          ),
+                        decoration: BoxDecoration(
+                          color: productModel.color,
+                          borderRadius:
+                              BorderRadius.circular(8), // rounded corners
                         ),
                       ),
                       title: Text(
@@ -80,6 +78,13 @@ class Favourite extends StatelessWidget {
                                   .headlineMedium!
                                   .color,
                             ),
+                      ),
+                      subtitle: Text(
+                        '\$${productModel.price.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
                       ),
                       onLongPress: () {
                         provider.remove(productModel);
