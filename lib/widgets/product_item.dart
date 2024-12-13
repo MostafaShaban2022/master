@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/models/product_model.dart';
 import 'package:flutter_application_14/pages/product_detail.dart';
+import 'package:flutter_application_14/pages/test.dart';
 import 'package:flutter_application_14/providers/cart_provider.dart';
 import 'package:flutter_application_14/providers/favourite_provider.dart';
 import 'package:provider/provider.dart';
@@ -42,14 +43,24 @@ class ProductItem extends StatelessWidget {
         ),
         const SizedBox(width: 15),
 
-        Text(
-          productModel.name,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
-                fontWeight:
-                    Theme.of(context).textTheme.headlineMedium!.fontWeight,
-                color: Theme.of(context).textTheme.headlineMedium!.color,
-              ),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Test(),
+                ));
+          },
+          child: Text(
+            productModel.name,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize:
+                      Theme.of(context).textTheme.headlineMedium!.fontSize,
+                  fontWeight:
+                      Theme.of(context).textTheme.headlineMedium!.fontWeight,
+                  color: Theme.of(context).textTheme.headlineMedium!.color,
+                ),
+          ),
         ),
 
         const Spacer(),

@@ -6,13 +6,16 @@ const List<MapLocale> LOCALES = [
 ];
 
 mixin LocaleData {
+  static const String title = 'title';
+  static const String body = 'body';
+
   static const Map<String, dynamic> En = {
-    'title': 'localization',
-    'body': 'Laptop',
+    title: 'localization',
+    body: 'Laptop',
   };
 
   static const Map<String, dynamic> Ar = {
-    'title': 'ترجمة',
-    'body': 'لاب توب',
+    title: 'ترجمة',
+    body: 'لاب توب',
   };
 }

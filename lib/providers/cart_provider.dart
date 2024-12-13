@@ -31,7 +31,9 @@ class CartProvider extends ChangeNotifier {
   }
 
   double getCartTotal() {
-    return _items.fold(0, (previousValue, item) => previousValue + item.price);
+    return _items.fold(0, (total, item) {
+      return total + (item.price * item.quantity.value);
+    });
   }
 
   Future<void> _loadCart() async {
@@ -45,6 +47,7 @@ class CartProvider extends ChangeNotifier {
             name: item['name'],
             color: Color(item['color']),
             price: item['price'],
+            initialQuantity: item['quantity'],
           )));
       notifyListeners();
     }
@@ -59,6 +62,7 @@ class CartProvider extends ChangeNotifier {
                 'name': item.name,
                 'color': item.color.value,
                 'price': item.price,
+                'quantity': item.quantity.value,
               })
           .toList(),
     );

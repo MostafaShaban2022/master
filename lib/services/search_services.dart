@@ -87,7 +87,9 @@ class SearchServices extends SearchDelegate<String> {
             height: 22,
             width: 22,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4), color: product.color),
+              borderRadius: BorderRadius.circular(4),
+              color: product.color,
+            ),
           ),
           onTap: () {
             Navigator.push(

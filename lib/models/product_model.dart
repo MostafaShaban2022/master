@@ -1,24 +1,29 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class ProductModel {
   int id;
   String name;
   Color color;
   double price;
+  ValueNotifier<int> quantity;
 
   ProductModel({
     required this.id,
     required this.name,
     required this.color,
     required this.price,
-  });
+    int initialQuantity = 1,
+  }) : quantity = ValueNotifier<int>(initialQuantity);
+  void updateQuantity(int newQuantity) {
+    quantity.value = newQuantity;
+  }
 
   // Convert ProductModel to JSON-compatible map
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
-      'color': color.value, // Save color as an integer value
+      'color': color.value,
       'price': price,
     };
   }
